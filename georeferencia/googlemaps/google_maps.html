@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Google maps</title>
+	
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css" rel="stylesheet">
+	
+    <style>
+	  #google-map {
+		width: 100%;
+		height: 400px;
+	  }
+	</style>
+
+</head>
+<body>
+	<div class="container">
+		<div id="google-map"></div>
+	</div>
+		
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
+	<script src="https://unpkg.com/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+	
+	<!--
+	<script src="https://maps.googleapis.com/maps/api/js?key=TU_API_KEY&callback=initMap" async defer></script>
+	-->
+	
+	<script src="https://maps.googleapis.com/maps/api/js?sensor=false&callback=initMap" async defer></script>
+	
+	<script>
+
+	function initMap() 
+	{
+	  var mapOptions = {
+		center: { lat: 37.7749, lng: -122.4194 }, 
+		zoom: 12 
+	  };
+
+	  var map = new google.maps.Map(document.getElementById('google-map'), mapOptions);
+	  
+	  // agregar marcadores, rutas, polígonos y otras funcionalidades
+	}
+
+	</script>
+
+</body>
+</html>
