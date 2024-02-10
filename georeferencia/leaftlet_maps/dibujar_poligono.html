@@ -28,9 +28,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/js/fontawesome.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-svg-core@6.5.1/index.min.js"></script>
 	
-	
-	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
-	
+		
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-pip/leaflet-pip.min.js"></script>
+
+
 	<script>
 			
 		const initMap = () => 
@@ -51,24 +53,25 @@
 			]).addTo(map);
 			var polygonCoords = polygon.getLatLngs();
 
-			//agregando marcas
+			//agregando marcadores
 			var marker1 = L.marker([-37.062, -61.925]).addTo(map);
 			var marker2 = L.marker([-37.0621, -61.926]).addTo(map)
 
-			//listade de marcadores
-			var markers = [marker1, marker2, marker3];
+			//lista de de marcadores
+			var markers = [marker1, marker2];
 			var markerCoords = markers.map(marker => marker.getLatLng());
 
 			//query de cuantos marcadores estan dentro del polígono
 			var markersInsidePolygon = [];
-			markerCoords.forEach(coord => {
+			markerCoords.forEach(coord => 
+			{
 				if (leafletPip.pointInLayer(coord, polygon)) {
 					markersInsidePolygon.push(coord);
 				}
 			});
 
 			//resultados
-			console.log("Coordenadas de los marcadores dentro del polígono:", markersInsidePolygon);
+			alert("Coordenadas de los marcadores dentro del polígono:", markersInsidePolygon);
 		}
 
 		document.addEventListener('DOMContentLoaded', () => {
