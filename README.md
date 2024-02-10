@@ -7,6 +7,6 @@
 <details open>
         <summary></summary>
        
-<a href="[https://fernandofilipuzzi-utn.github.io/html_maps/)">Ver en git pages</a>
+<a href="[https://fernandofilipuzzi-utn.github.io/html_maps/]">Ver en git pages</a>
 
 </details>
