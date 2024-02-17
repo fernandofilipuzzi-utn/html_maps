@@ -77,6 +77,8 @@
         const redIcon = new LeafIcon({ iconUrl: 'img/leaf-red.png' });
         const orangeIcon = new LeafIcon({ iconUrl: 'img/leaf-orange.png' });
 
+        var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 10000 };
+
         if(!navigator.geolocation)
         {
             //[violation] only request geolocation information in response to a user gesture
@@ -84,10 +86,14 @@
         }
         else
         {
-            navigator.geolocation.getCurrentPosition(getPosition);
+            setInterval(() => 
+                {
+                    navigator.geolocation.getCurrentPosition(getPosition,getPositionError, options);
+                }, 2000);
         }
 
-        function addMarker(L, map, element) {
+        function addMarker(L, map, element) 
+        {
             const icon = element.icon ? element.icon : null;
 
             if(icon)
@@ -97,10 +103,6 @@
             }
             else
             {
-                setInterval(() => 
-                {
-                    navigator.geolocation.getCurrentPosition(getPosition)
-                }, 1000);
                 const mark = L.marker(element.c).bindPopup(element.message).addTo(map);
                 return mark;
             }
@@ -124,6 +126,13 @@
 
             addMarker(L, map, {c:[lat, long], message:'yo!'});
         }
+
+        function getPositionError(error)
+        {
+            alert(error.message);
+        }
+
+
     </script>
 </body>
 
