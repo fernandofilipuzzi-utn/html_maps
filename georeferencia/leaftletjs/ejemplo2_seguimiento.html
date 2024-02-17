@@ -32,21 +32,15 @@
 
 <body>
     <div class="containt">
-        <div class="row p-3 m-3">
-            <div class="col-10 p-3">
+        <div class="row p-3">
+            <div class="col-12">
                 <div id="map" ></div>
             </div>
-            <div class="col-2 p-3">
-                <button type="button" id="btnCargarMarcadores" 
-                    class="btn btn-primary"
-                    onclick="btnCargarMarcadores_click()">Agregar Marcadores</button>
-                <button type="button" id="btnCargarPoligonos" 
-                    class="btn btn-primary"
-                    onclick="btnCargarPoligonos_click()">Agregar Poligono</button>
-            </div>
 
-            <a href="https://leafletjs.com/examples/quick-start/">referencias</a>
-            <a href="https://www.nperf.com/es/map/5g">ejemplo</a>
+            <div>
+                <a href="https://leafletjs.com/examples/quick-start/">referencias</a>
+                <a href="https://www.nperf.com/es/map/5g">ejemplo</a>
+            </div>
         </div>
     </div>
 
@@ -103,7 +97,8 @@
             }
             else
             {
-                setInterval(() => {
+                setInterval(() => 
+                {
                     navigator.geolocation.getCurrentPosition(getPosition)
                 }, 1000);
                 const mark = L.marker(element.c).bindPopup(element.message).addTo(map);
@@ -124,7 +119,7 @@
             {
                 map.removeLayer(marker);
             }
-            
+
             console.log(lat, long, accuracy);
 
             addMarker(L, map, {c:[lat, long], message:'yo!'});
