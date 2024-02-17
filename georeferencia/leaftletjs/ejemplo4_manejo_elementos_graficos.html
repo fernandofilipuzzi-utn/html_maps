@@ -33,6 +33,12 @@
 <body>
     <div class="containt">
         <div class="row p-3">
+            <div class="row">
+                <button id="btnMarkers" onclick="btnMarkers_click()">Marcas</button>
+                <button id="btnToolTips" onclick="btnToolTips_click()">Toolt Tips</button>
+                <button id="btnToolTipsRich" onclick="btnToolTipsRich_click()">Toolt Tips Rich</button>
+            </div>
+
             <div class="col-12">
                 <div id="map"></div>
             </div>
@@ -68,20 +74,21 @@
                 popupAnchor: [-3, -76]
             }
         });
-
         const map = L.map('map').setView([c.lat, c.lng], 11);
-
         const greenIcon = new LeafIcon({ iconUrl: 'img/leaf-green.png' });
         const redIcon = new LeafIcon({ iconUrl: 'img/leaf-red.png' });
         const orangeIcon = new LeafIcon({ iconUrl: 'img/leaf-orange.png' });
         // #endregion
 
         // #region inicializar mapa
-        map.locate({ setView: true, maxZoom: 16, zoomControl: true });
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+        function initMap()
+        {
+            map.locate({ setView: true, maxZoom: 16, zoomControl: true });
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+        }
         //#endregion
 
         // #region geolocalizacion
@@ -141,6 +148,72 @@
             alert(error.message);
         }
         // #endregion
+
+        document.addEventListener('DOMContentLoaded', initMap);
+     
+        function btnMarkers_click()
+        {
+            let prueba=[ {lat:-37.064604, lng:-61.948729},
+                         {lat:-37.067934, lng:-61.942677},
+                         {lat:-37.064218, lng:-61.944437}];
+
+            prueba.forEach(function(coord)
+            {
+                console.log(coord);
+                addMarker(L, map, {c:coord, message:'.'}) ;
+            })
+        }
+
+        function btnToolTips_click()
+        {
+            let prueba=[ {lat:-37.064604, lng:-61.948729},
+                         {lat:-37.067934, lng:-61.942677},
+                         {lat:-37.064218, lng:-61.944437}];
+
+            prueba.forEach(function(coord)
+            {
+                //console.log(coord);
+                //map.panBy(L.point([coord.lat, coord.lng]));
+                var tooltip = L.tooltip()
+                .setLatLng([coord.lat,coord.lng])
+                .setContent(`
+                Hello world!<br />
+                This is a nice tooltip.`)
+                .addTo(map);
+            })
+        }
+
+        function accion_click()
+        {
+            alert('hola!');
+        }
+
+        function btnToolTipsRich_click()
+        {
+            let prueba=[ {lat:-37.064604, lng:-61.948729},
+                         {lat:-37.067934, lng:-61.942677},
+                         {lat:-37.064218, lng:-61.944437}];
+
+            prueba.forEach(function(coord)
+            {
+                const options={direction:'top', permanent:true, interactive: true};
+                var tooltip = L.tooltip(options)
+                .setLatLng([coord.lat,coord.lng])
+                .setContent(`
+                            <div class="row text-center">
+                                <div class="col">
+                                    <h3>Título</h3>
+                                    <label>Mensaje</label>
+                                    <div>
+                                        <button type="button" id="btn" class="btn btn-primary"" onclick="accion_click()">button</button>
+                                    </div>
+                                </div>
+                            </div>
+                            `)
+                .addTo(map);
+            })
+        }
+        
     </script>
 </body>
 

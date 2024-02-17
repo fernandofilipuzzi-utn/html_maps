@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css" >
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
 </head>
 
 <body style="min-width: 340px;">
@@ -28,9 +28,8 @@
 		<ul>
 			<li><a href="ejemplo1_comenzando.html">Ejemplo1. comenzando</a></li>	
 			<li><a href="ejemplo2_seguimiento.html">Ejemplo2. seguimiento</a></li>	
-			<li><a href="ejemplo_simple.html">Simple</a></li>
-			<li><a href="dibujar_poligono.html">Marcas dentro de un polígono</a></li>
-			<li><a href="dibujar_poligono_online.html">Leaft Maps</a></li>	
+			<li><a href="ejemplo3_eventos.html">Ejemplo3. eventos</a></li>	
+			<li><a href="ejemplo4_manejo_elementos_graficos.html">Ejemplo4. Manejo de elementos graficos</a></li>											
 		</ul>
 		
 		<h3>Ejemplos aplicados</h3>
@@ -45,12 +44,48 @@
 
 		<h3>Referencias - Desarrollador</h3>
 		<ul>
-			https://harrywood.co.uk/maps/examples/
-			<li><a href="https://harrywood.co.uk/maps/examples/leaflet/geolocate.view.html">enlace desarrollador</a></li>
+			<li><a href="https://harrywood.co.uk/maps/examples/">ejemplos</a></li>
+			<li><a href="https://harrywood.co.uk/maps/examples/leaflet/geolocate.view.html">ejemplo goelocate</a></li>
 		</ul>
 		
-		
+
+
+		<h3>Tooltips</h3>
+			<p>Ejemplo</p>
+			<div class="row">
+				<div class="col-8">
+					<pre><code class="javascript">
+
+function btnToolTipsRich_click()
+{
+	let prueba=[ {lat:-37.064604, lng:-61.948729},
+					{lat:-37.067934, lng:-61.942677},
+					{lat:-37.064218, lng:-61.944437}];
+
+	prueba.forEach(function(coord)
+	{
+		const options={direction:'top', permanent:true, interactive: true};
+		var tooltip = L.tooltip(options)
+		.setLatLng([coord.lat,coord.lng])
+		.setContent('contenido')
+		.addTo(map);
+	});
+}
+				</code></pre>
+			</div>
+			<div class="col-4">
+				<img src="./docs/img/tooltip.png" style="width:100%;">
+			</div>
+		</div>
 	</div>
+
+	<h3>borradores</h3>
+	<ul>
+		<li><a href="ejemplo_simple.html">Simple</a></li>
+			<li><a href="dibujar_poligono.html">Marcas dentro de un polígono</a></li>
+			<li><a href="dibujar_poligono_online.html">Leaft Maps</a></li>	
+	<ul>
+
 	
 	
 	
@@ -59,6 +94,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/js/fontawesome.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-svg-core@6.5.1/index.min.js"></script>
+
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+	<script>hljs.highlightAll();</script>
 </body>
 
 </html>

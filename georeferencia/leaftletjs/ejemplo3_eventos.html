@@ -5,7 +5,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
     <title>html mapas</title>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css">
@@ -14,7 +13,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
         integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
-
 
     <style>
         html,
@@ -58,7 +56,8 @@
         var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 10000 };
         let c = {lat:-37.0638296, lng:-61.9403603};
 
-        const LeafIcon = L.Icon.extend({
+        const LeafIcon = L.Icon.extend(
+        {
             options: {
                 shadowUrl: 'img/leaf-shadow.png',
                 iconSize: [38, 95],
@@ -77,70 +76,33 @@
         // #endregion
 
         // #region inicializar mapa
-        map.locate({ setView: true, maxZoom: 16, zoomControl: true });
-        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-            {
-                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }).addTo(map);
+        function initMap() 
+        {
+            map.locate({ setView: true, maxZoom: 16, zoomControl: true });
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+            map.on('click', onMapClick);
+        }
         //#endregion
 
         // #region geolocalizacion
-        if (!navigator.geolocation) 
+        var popup = L.popup();
+        function onMapClick(e) 
         {
-            //[violation] only request geolocation information in response to a user gesture
-            console.log("tu navegador no suporta geolocalización");
-        }
-        else {
-            setInterval(() =>
-            {
-                navigator.geolocation.getCurrentPosition(getPosition, getPositionError, options);
-            }, 2000);
+            //map click event object (e) has latlng property which is a location at which the click occured.
+            popup
+            .setLatLng(e.latlng)
+            .setContent("You clicked the map at " + e.latlng.toString())
+            .openOn(map);
         }
         // #endregion
 
-        // #region utilidades
-        function addMarker(L, map, element) 
+        document.addEventListener('DOMContentLoaded', () => 
         {
-            const icon = element.icon ? element.icon : null;
-
-            if (icon) 
-            {
-                const mark = L.marker(element.c, { icon: icon }).bindPopup(element.message).addTo(map);
-                return mark;
-            }
-            else {
-                const mark = L.marker(element.c).bindPopup(element.message).addTo(map);
-                return mark;
-            }
-        }
-
-        // #endregion
-
-        // #region
-        var marker, circle;
-
-        function getPosition(position) 
-        {
-            console.log(position)
-            var lat = position.coords.latitude
-            var lng = position.coords.longitude
-            var accuracy = position.coords.accuracy
-
-            if (marker) 
-            {
-                map.removeLayer(marker);
-            }
-
-            //console.log(lat, long, accuracy);
-
-            addMarker(L, map, { c:{lat:lat, lng:lng}, message: 'yo!' });
-        }
-
-        function getPositionError(error) 
-        {
-            alert(error.message);
-        }
-        // #endregion
+			initMap();
+		});
     </script>
 </body>
 
