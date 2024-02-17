@@ -34,7 +34,9 @@
     <div class="containt">
         <div class="row p-3">
             <div class="row">
-                <button id="btnMarkers" onclick="btnMarkers_click()">Marcas</button>
+                <button id="btnAddMarkers" onclick="btnAddMarkers_click()">Agregar Marcas</button>
+                <button id="btnMovMarkers" onclick="btnMovMarkers_click()">Mover Marcas</button>
+                <button id="btnClearMarkers" onclick="btnClearMarkers_click()">Borrar Marcas</button>
                 <button id="btnToolTips" onclick="btnToolTips_click()">Toolt Tips</button>
                 <button id="btnToolTipsRich" onclick="btnToolTipsRich_click()">Toolt Tips Rich</button>
             </div>
@@ -105,24 +107,6 @@
         }
         // #endregion
 
-        // #region utilidades
-        function addMarker(L, map, element) 
-        {
-            const icon = element.icon ? element.icon : null;
-
-            if (icon) 
-            {
-                const mark = L.marker(element.c, { icon: icon }).bindPopup(element.message).addTo(map);
-                return mark;
-            }
-            else {
-                const mark = L.marker(element.c).bindPopup(element.message).addTo(map);
-                return mark;
-            }
-        }
-
-        // #endregion
-
         // #region
         var marker, circle;
 
@@ -151,17 +135,36 @@
 
         document.addEventListener('DOMContentLoaded', initMap);
      
-        function btnMarkers_click()
+        const marks=[];
+
+        function btnAddMarkers_click()
         {
-            let prueba=[ {lat:-37.064604, lng:-61.948729},
-                         {lat:-37.067934, lng:-61.942677},
-                         {lat:-37.064218, lng:-61.944437}];
+            let prueba=[ {lat:-37.064604, lng:-61.948729,message:'mark1'},
+                         {lat:-37.067934, lng:-61.942677,message:'mark2'},
+                         {lat:-37.064218, lng:-61.944437,message:'mark3'}];
 
             prueba.forEach(function(coord)
             {
                 console.log(coord);
-                addMarker(L, map, {c:coord, message:'.'}) ;
-            })
+                const mark = L.marker(coord).bindPopup(coord.message).addTo(map);
+                marks.push(mark);
+            });
+        }
+
+        function btnMovMarkers_click()
+        {
+            marks.forEach(function(mark)
+            {
+                mark.setLatLng([-37.064604, -61.948729]);
+            });
+        }        
+        
+        function btnClearMarkers_click()
+        {
+            marks.forEach(function(mark)
+            {
+                map.removeLayer(mark) ;
+            });
         }
 
         function btnToolTips_click()
