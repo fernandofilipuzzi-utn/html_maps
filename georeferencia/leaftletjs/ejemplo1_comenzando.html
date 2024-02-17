@@ -23,22 +23,20 @@
             margin: 0;
         }
 
-        .leaflet-container {
-            height: 400px;
-            width: 600px;
-            max-width: 100%;
-            max-height: 100%;
+        #map {
+            height: 100vh;
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
+    <div class="containt">
         <div class="row p-3 m-3">
-            <div class="col-11 p-3 m-3">
-                <div id="map"></div>
+            <div class="col-10 p-3">
+                <div id="map" ></div>
             </div>
-            <div class="col-1 p-3 m-3">
+            <div class="col-2 p-3">
                 <button type="button" id="btnCargarMarcadores" 
                     class="btn btn-primary"
                     onclick="btnCargarMarcadores_click()">Agregar Marcadores</button>
