@@ -39,6 +39,7 @@
                 <button id="btnClearMarkers" onclick="btnClearMarkers_click()">Borrar Marcas</button>
                 <button id="btnToolTips" onclick="btnToolTips_click()">Toolt Tips</button>
                 <button id="btnToolTipsRich" onclick="btnToolTipsRich_click()">Toolt Tips Rich</button>
+                <button id="btnClearAll" onclick="btnClearAll_click()">Borrar Todo</button>                
             </div>
 
             <div class="col-12">
@@ -166,7 +167,15 @@
                 map.removeLayer(mark) ;
             });
         }
-
+        var markersLayer = new L.LayerGroup();
+        function btnClearAll_click()
+        {
+           // marker = L.marker([lat, lon])
+           // var x_id = L.stamp(markers);
+           // map.removeLayer(markers[id]);
+           L.remove();
+        }
+        
         function btnToolTips_click()
         {
             let prueba=[ {lat:-37.064604, lng:-61.948729},
