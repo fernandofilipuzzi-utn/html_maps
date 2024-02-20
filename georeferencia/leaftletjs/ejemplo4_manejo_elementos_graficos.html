@@ -12,8 +12,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.0/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-        integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
 
 
     <style>
@@ -39,7 +38,7 @@
                 <button id="btnClearMarkers" onclick="btnClearMarkers_click()">Borrar Marcas</button>
                 <button id="btnToolTips" onclick="btnToolTips_click()">Toolt Tips</button>
                 <button id="btnToolTipsRich" onclick="btnToolTipsRich_click()">Toolt Tips Rich</button>
-                <button id="btnClearAll" onclick="btnClearAll_click()">Borrar Todo</button>                
+                <button id="btnClearAll" onclick="btnClearAll_click()">Borrar Todo</button>
             </div>
 
             <div class="col-12">
@@ -59,16 +58,17 @@
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.1/js/fontawesome.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-svg-core@6.5.1/index.min.js"></script>
 
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
     <script language="javascript">
 
         // #region inicializaciones de constantes
         var options = { enableHighAccuracy: true, maximumAge: 100, timeout: 10000 };
-        let c = {lat:-37.0638296, lng:-61.9403603};
+        let c = { lat: -37.0638296, lng: -61.9403603 };
 
-        const LeafIcon = L.Icon.extend({
-            options: {
+        const LeafIcon = L.Icon.extend(
+        {
+            options: 
+            {
                 shadowUrl: 'img/leaf-shadow.png',
                 iconSize: [38, 95],
                 shadowSize: [50, 64],
@@ -77,35 +77,22 @@
                 popupAnchor: [-3, -76]
             }
         });
-        const map = L.map('map').setView([c.lat, c.lng], 11);
+        let map = null;
         const greenIcon = new LeafIcon({ iconUrl: 'img/leaf-green.png' });
         const redIcon = new LeafIcon({ iconUrl: 'img/leaf-red.png' });
         const orangeIcon = new LeafIcon({ iconUrl: 'img/leaf-orange.png' });
         // #endregion
-
-        // #region inicializar mapa
-        function initMap()
-        {
-            map.locate({ setView: true, maxZoom: 16, zoomControl: true });
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
-                {
-                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
-        }
-        //#endregion
-
+    
         // #region geolocalizacion
-        if (!navigator.geolocation) 
-        {
-            //[violation] only request geolocation information in response to a user gesture
-            console.log("tu navegador no suporta geolocalización");
-        }
-        else {
-            setInterval(() =>
-            {
-                navigator.geolocation.getCurrentPosition(getPosition, getPositionError, options);
-            }, 2000);
-        }
+        // if (!navigator.geolocation) {
+        //     //[violation] only request geolocation information in response to a user gesture
+        //     console.log("tu navegador no suporta geolocalización");
+        // }
+        // else {
+        //     setInterval(() => {
+        //         navigator.geolocation.getCurrentPosition(getPosition, getPositionError, options);
+        //     }, 2000);
+        // }
         // #endregion
 
         // #region
@@ -118,14 +105,13 @@
             var lng = position.coords.longitude
             var accuracy = position.coords.accuracy
 
-            if (marker) 
-            {
+            if (marker) {
                 map.removeLayer(marker);
             }
 
             //console.log(lat, long, accuracy);
 
-            addMarker(L, map, { c:{lat:lat, lng:lng}, message: 'yo!' });
+            addMarker(L, map, { c: { lat: lat, lng: lng }, message: 'yo!' });
         }
 
         function getPositionError(error) 
@@ -134,84 +120,81 @@
         }
         // #endregion
 
-        document.addEventListener('DOMContentLoaded', initMap);
-     
-        const marks=[];
 
-        function btnAddMarkers_click()
+        const marks = [];
+
+        function btnAddMarkers_click() 
         {
-            let prueba=[ {lat:-37.064604, lng:-61.948729,message:'mark1'},
-                         {lat:-37.067934, lng:-61.942677,message:'mark2'},
-                         {lat:-37.064218, lng:-61.944437,message:'mark3'}];
+            let prueba = [{ lat: -37.064604, lng: -61.948729, message: 'mark1' },
+            { lat: -37.067934, lng: -61.942677, message: 'mark2' },
+            { lat: -37.064218, lng: -61.944437, message: 'mark3' }];
 
-            prueba.forEach(function(coord)
-            {
+            prueba.forEach(function (coord) {
                 console.log(coord);
                 const mark = L.marker(coord).bindPopup(coord.message).addTo(map);
                 marks.push(mark);
             });
         }
 
-        function btnMovMarkers_click()
+        function btnMovMarkers_click() 
         {
-            marks.forEach(function(mark)
+            marks.forEach(function (mark) 
             {
                 mark.setLatLng([-37.064604, -61.948729]);
             });
-        }        
-        
-        function btnClearMarkers_click()
+        }
+
+        function btnClearMarkers_click() 
         {
-            marks.forEach(function(mark)
+            marks.forEach(function (mark) 
             {
-                map.removeLayer(mark) ;
+                map.removeLayer(mark);
             });
         }
-        var markersLayer = new L.LayerGroup();
-        function btnClearAll_click()
-        {
-           // marker = L.marker([lat, lon])
-           // var x_id = L.stamp(markers);
-           // map.removeLayer(markers[id]);
-           L.remove();
-        }
-        
-        function btnToolTips_click()
-        {
-            let prueba=[ {lat:-37.064604, lng:-61.948729},
-                         {lat:-37.067934, lng:-61.942677},
-                         {lat:-37.064218, lng:-61.944437}];
 
-            prueba.forEach(function(coord)
+        var markersLayer = new L.LayerGroup();
+
+        function btnClearAll_click() 
+        {
+            // marker = L.marker([lat, lon])
+            // var x_id = L.stamp(markers);
+            // map.removeLayer(markers[id]);
+            L.remove();
+        }
+
+        function btnToolTips_click() 
+        {
+            let prueba = [{ lat: -37.064604, lng: -61.948729 },
+            { lat: -37.067934, lng: -61.942677 },
+            { lat: -37.064218, lng: -61.944437 }];
+
+            prueba.forEach(function (coord) 
             {
                 //console.log(coord);
                 //map.panBy(L.point([coord.lat, coord.lng]));
                 var tooltip = L.tooltip()
-                .setLatLng([coord.lat,coord.lng])
-                .setContent(`
+                    .setLatLng([coord.lat, coord.lng])
+                    .setContent(`
                 Hello world!<br />
                 This is a nice tooltip.`)
-                .addTo(map);
+                    .addTo(map);
             })
         }
 
-        function accion_click()
-        {
+        function accion_click() {
             alert('hola!');
         }
 
-        function btnToolTipsRich_click()
-        {
-            let prueba=[ {lat:-37.064604, lng:-61.948729},
-                         {lat:-37.067934, lng:-61.942677},
-                         {lat:-37.064218, lng:-61.944437}];
+        function btnToolTipsRich_click() {
+            let prueba = [{ lat: -37.064604, lng: -61.948729 },
+            { lat: -37.067934, lng: -61.942677 },
+            { lat: -37.064218, lng: -61.944437 }];
 
-            prueba.forEach(function(coord)
-            {
-                const options={direction:'top', permanent:true, interactive: true};
+            prueba.forEach(function (coord) {
+                const options = { direction: 'top', permanent: true, interactive: true };
                 var tooltip = L.tooltip(options)
-                .setLatLng([coord.lat,coord.lng])
-                .setContent(`
+                    .setLatLng([coord.lat, coord.lng])
+                    .setContent(`
                             <div class="row text-center">
                                 <div class="col">
                                     <h3>Título</h3>
@@ -222,10 +205,48 @@
                                 </div>
                             </div>
                             `)
-                .addTo(map);
+                    .addTo(map);
             })
         }
-        
+
+        // #region inicializar mapa
+        function initMap(centro) 
+        {
+            map = L.map('map').setView([centro.lat, centro.lng], 11);
+         //   map.locate({ setView: true, maxZoom: 16, zoomControl: true });
+            //map.locate({ setView: true }); //centra el mapa en el lugar 
+            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+        }
+        //#endregion
+
+        function initCentroMap() 
+        {
+            /*
+            fetch("/api/GetMapaCentro").then(function (response) 
+            {
+                if (!response.ok) 
+                {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            }).then(function (data) 
+            {
+                initMap({lat:-37.063829,lng: -61.9403603});
+                console.log(data);
+            }).catch(function (error) 
+            {
+                console.error('There was a problem with the fetch operation:', error);
+            });
+            */
+            initMap({lat:-37.063829,lng: -61.9403603});
+            console.log(data);
+        }
+
+        document.addEventListener('DOMContentLoaded', initCentroMap);
+
     </script>
 </body>
 
